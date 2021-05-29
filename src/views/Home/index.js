@@ -1,9 +1,17 @@
-import React from 'react';
-import Icon from '../../components/atoms/Icon';
+import React, { useContext } from 'react';
+import List from '../../components/molecules/List';
+import Room from '../../components/molecules/Room';
+import AppContext from '../../context/AppContext';
 import { StyledHome } from './StyledHome';
 
 const Home = () => {
-  return <StyledHome>home</StyledHome>;
+  const context = useContext(AppContext);
+
+  return (
+    <StyledHome>
+      <List listArray={context.rooms} ListComponent={Room} />
+    </StyledHome>
+  );
 };
 
 export default Home;

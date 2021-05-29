@@ -1,7 +1,7 @@
 export const mainTheme = {
   colors: {
     primary: '#F88340',
-    primaryLight: '#FFE8DB',
+    primaryLight: '#fcc1a0',
     secondary: '#B1AFAF',
     tertiary: '#ECECEC',
     disabled: '#E5E5E5',
@@ -13,6 +13,10 @@ export const mainTheme = {
   },
 
   fontSizes: {
+    s: '1.2rem',
+    l: '1.4rem',
+    xl: '1.6rem',
+
     icons: {
       s: '1rem',
       l: '3rem',

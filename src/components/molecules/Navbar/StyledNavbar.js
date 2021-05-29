@@ -19,7 +19,11 @@ export const StyledNavLink = styled(NavLink)`
 
 export const StyledAddLink = styled(NavLink)`
   border-radius: 50%;
-  padding: 0.8rem;
+  width: 5rem;
+  height: 5rem;
   color: ${({ theme }) => theme.colors.white};
   background-color: ${({ theme }) => theme.colors.primary};
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `;
