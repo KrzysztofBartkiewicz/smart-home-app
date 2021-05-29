@@ -1,7 +1,9 @@
 import React from 'react';
+import Icon from '../../components/atoms/Icon';
+import { StyledHome } from './StyledHome';
 
 const Home = () => {
-  return <div>Home</div>;
+  return <StyledHome>home</StyledHome>;
 };
 
 export default Home;

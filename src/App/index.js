@@ -6,9 +6,6 @@ import GlobalStyleTemplate from '../templates/GlobalStyleTemplate';
 const App = () => (
   <GlobalStyleTemplate>
     <Router />
-    <span style={{ color: 'red' }} class="material-icons">
-      tv
-    </span>
   </GlobalStyleTemplate>
 );
 
