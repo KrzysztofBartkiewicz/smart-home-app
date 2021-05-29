@@ -5,7 +5,7 @@ import {
   StyledRoomConditionsWrapper,
   StyledRoomHeader,
   StyledRoomHeading,
-  StyledSettingsButton,
+  StyledPopupMenu,
   StyledBackButton,
 } from './StyledRoomHeader';
 
@@ -36,7 +36,7 @@ const RoomHeader = ({ name, members, temp, humidity }) => {
           conditionName="HUMIDITY"
         />
       </StyledRoomConditionsWrapper>
-      <StyledSettingsButton icon="settings" />
+      <StyledPopupMenu />
     </StyledRoomHeader>
   );
 };

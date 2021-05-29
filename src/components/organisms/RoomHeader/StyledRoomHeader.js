@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Heading from '../../atoms/Heading';
 import Paragraph from '../../atoms/Paragraph';
 import Button from '../../atoms/Button';
+import PopupMenu from '../../molecules/PopupMenu';
 
 export const StyledRoomHeader = styled.header`
   padding: 1.5rem;
@@ -32,7 +33,7 @@ export const StyledRoomConditionsWrapper = styled.div`
   align-items: center;
 `;
 
-export const StyledSettingsButton = styled(Button)`
+export const StyledPopupMenu = styled(PopupMenu)`
   color: ${({ theme }) => theme.colors.white};
   position: absolute;
   right: 1.5rem;

@@ -61,8 +61,75 @@ const ROOMS = [
   },
 ];
 
+const DEVICES = [
+  {
+    id: uuid(),
+    name: 'Fridge',
+    isOn: true,
+    parameters: [
+      {
+        name: 'Temperature',
+        value: 3,
+      },
+    ],
+  },
+  {
+    id: uuid(),
+    name: 'Lamp',
+    isOn: true,
+    parameters: [
+      {
+        name: 'Brightness',
+        value: 65,
+      },
+    ],
+  },
+  {
+    id: uuid(),
+    name: 'TV',
+    isOn: true,
+    parameters: [
+      {
+        name: 'Volume',
+        value: 3,
+      },
+    ],
+  },
+  {
+    id: uuid(),
+    name: 'Air Conditioner',
+    isOn: true,
+    parameters: [
+      {
+        name: 'Temperature',
+        value: 20,
+      },
+      {
+        name: 'Airflow',
+        value: 40,
+      },
+    ],
+  },
+  {
+    id: uuid(),
+    name: 'CCTV Cam',
+    isOn: true,
+    parameters: [
+      {
+        name: 'Left/Right',
+        value: 96.4,
+      },
+      {
+        name: 'Up/Down',
+        value: 86.2,
+      },
+    ],
+  },
+];
+
 const App = () => {
   const [rooms, setRooms] = useState(ROOMS);
+  const [devices, setDevices] = useState(DEVICES);
 
   const handleRoomToggleOn = (event, roomId) => {
     const mappedRooms = rooms.map((room) => {
