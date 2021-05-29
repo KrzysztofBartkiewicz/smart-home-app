@@ -16,6 +16,7 @@ export const mainTheme = {
     s: '1.2rem',
     l: '1.4rem',
     xl: '1.6rem',
+    xxl: '1.8rem',
 
     icons: {
       s: '1rem',

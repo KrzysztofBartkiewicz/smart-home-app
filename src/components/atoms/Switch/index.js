@@ -22,6 +22,7 @@ const MaterialSwitch = ({ isChecked, onChangeFn, isDisabled }) => {
     <PurpleSwitch
       disabled={isDisabled}
       checked={isChecked}
+      onClick={(event) => event.stopPropagation()}
       onChange={onChangeFn}
       name="checkedA"
     />

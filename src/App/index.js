@@ -11,6 +11,8 @@ const ROOMS = [
     members: 3,
     devices: [],
     isOn: true,
+    temp: 22,
+    humidity: 50,
   },
   {
     id: uuid(),
@@ -18,6 +20,8 @@ const ROOMS = [
     members: 3,
     devices: [],
     isOn: false,
+    temp: 23,
+    humidity: 30,
   },
   {
     id: uuid(),
@@ -25,6 +29,8 @@ const ROOMS = [
     members: 2,
     devices: [],
     isOn: false,
+    temp: 21,
+    humidity: 45,
   },
   {
     id: uuid(),
@@ -32,6 +38,8 @@ const ROOMS = [
     members: 2,
     devices: [],
     isOn: false,
+    temp: 25,
+    humidity: 55,
   },
   {
     id: uuid(),
@@ -39,6 +47,8 @@ const ROOMS = [
     members: 3,
     devices: [],
     isOn: false,
+    temp: 24,
+    humidity: 37,
   },
   {
     id: uuid(),
@@ -46,6 +56,8 @@ const ROOMS = [
     members: 4,
     devices: [],
     isOn: false,
+    temp: 15,
+    humidity: 20,
   },
 ];
 
@@ -53,7 +65,6 @@ const App = () => {
   const [rooms, setRooms] = useState(ROOMS);
 
   const handleRoomToggleOn = (event, roomId) => {
-    console.log(roomId);
     const mappedRooms = rooms.map((room) => {
       if (room.id === roomId) {
         return {

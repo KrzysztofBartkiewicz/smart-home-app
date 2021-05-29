@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import Heading from '../../atoms/Heading';
 import Paragraph from '../../atoms/Paragraph';
+import { Link } from 'react-router-dom';
 
-export const StyledRoom = styled.div`
+export const StyledRoom = styled(Link)`
+  display: block;
   padding: 1.5rem;
   border-radius: 1rem;
   background-color: ${({ theme }) => theme.colors.white};

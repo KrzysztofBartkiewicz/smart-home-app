@@ -1,8 +1,28 @@
 import React from 'react';
-import { StyledHeading } from './StyledHeading';
+import {
+  StyledHeadingH1,
+  StyledHeadingH2,
+  StyledHeadingH3,
+} from './StyledHeading';
 
-const Heading = ({ children, className }) => {
-  return <StyledHeading className={className}>{children}</StyledHeading>;
+const Heading = ({ children, className, headingType }) => {
+  const renderHeading = () => {
+    switch (headingType) {
+      case 'h1':
+        return (
+          <StyledHeadingH1 className={className}>{children}</StyledHeadingH1>
+        );
+      case 'h2':
+        return (
+          <StyledHeadingH3 className={className}>{children}</StyledHeadingH3>
+        );
+      default:
+        return (
+          <StyledHeadingH3 className={className}>{children}</StyledHeadingH3>
+        );
+    }
+  };
+  return renderHeading();
 };
 
 export default Heading;

@@ -8,16 +8,21 @@ import {
   StyledRoom,
 } from './StyledRoom';
 
-const Room = ({ id, name, members, devices, isOn }) => {
+const Room = (props) => {
   const context = useContext(AppContext);
   const { handleRoomToggleOn } = context;
 
+  const { id, name, members, devices, isOn } = props;
+
   return (
-    <StyledRoom>
+    <StyledRoom
+      to={{
+        pathname: `room/${name.replace(/\s/g, '')}`,
+        state: { ...props },
+      }}
+    >
       <StyledName>{name}</StyledName>
-      <StyledMembersInfo size="s">
-        {members} have access to this room
-      </StyledMembersInfo>
+      <StyledMembersInfo>{members} have access to this room</StyledMembersInfo>
       <StyledDevicesInfo>{devices.length} Devices</StyledDevicesInfo>
       <MaterialSwitch
         isChecked={isOn}
