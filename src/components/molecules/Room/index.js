@@ -8,17 +8,14 @@ import {
   StyledRoom,
 } from './StyledRoom';
 
-const Room = (props) => {
-  const context = useContext(AppContext);
-  const { handleRoomToggleOn } = context;
-
-  const { id, name, members, devices, isOn } = props;
+const Room = ({ id, name, members, devices, isOn }) => {
+  const { handleRoomToggleOn } = useContext(AppContext);
 
   return (
     <StyledRoom
       to={{
         pathname: `room/${name.replace(/\s/g, '')}`,
-        state: { ...props },
+        state: { id },
       }}
     >
       <StyledName>{name}</StyledName>

@@ -9,7 +9,45 @@ const ROOMS = [
     id: uuid(),
     name: 'Living Room',
     members: 3,
-    devices: [],
+    devices: [
+      {
+        name: 'Air Conditioner',
+        isOn: true,
+        icon: 'ac_unit',
+        parameters: [
+          {
+            name: 'Temperature',
+            value: 30,
+          },
+          {
+            name: 'Airflow',
+            value: 20,
+          },
+        ],
+      },
+      {
+        name: 'TV',
+        isOn: true,
+        icon: 'tv',
+        parameters: [
+          {
+            name: 'Volume',
+            value: 5,
+          },
+        ],
+      },
+      {
+        name: 'Lamp',
+        isOn: true,
+        icon: 'light',
+        parameters: [
+          {
+            name: 'Brightness',
+            value: 5,
+          },
+        ],
+      },
+    ],
     isOn: true,
     temp: 22,
     humidity: 50,
@@ -36,7 +74,29 @@ const ROOMS = [
     id: uuid(),
     name: 'Kitchen',
     members: 2,
-    devices: [],
+    devices: [
+      {
+        name: 'Fridge',
+        isOn: true,
+        icon: 'kitchen',
+        parameters: [{ name: 'Temperature', value: 30 }],
+      },
+      {
+        name: 'Air Conditioner',
+        isOn: true,
+        icon: 'ac_unit',
+        parameters: [
+          {
+            name: 'Temperature',
+            value: 30,
+          },
+          {
+            name: 'Airflow',
+            value: 20,
+          },
+        ],
+      },
+    ],
     isOn: false,
     temp: 25,
     humidity: 55,
@@ -63,73 +123,51 @@ const ROOMS = [
 
 const DEVICES = [
   {
-    id: uuid(),
     name: 'Fridge',
     isOn: true,
-    parameters: [
-      {
-        name: 'Temperature',
-        value: 3,
-      },
-    ],
+    icon: 'kitchen',
+    parameters: {
+      Temperature: 3,
+    },
   },
   {
-    id: uuid(),
     name: 'Lamp',
     isOn: true,
-    parameters: [
-      {
-        name: 'Brightness',
-        value: 65,
-      },
-    ],
+    icon: 'light',
+    parameters: {
+      Brightness: 65,
+    },
   },
   {
-    id: uuid(),
     name: 'TV',
     isOn: true,
-    parameters: [
-      {
-        name: 'Volume',
-        value: 3,
-      },
-    ],
+    icon: 'tv',
+    parameters: {
+      Volume: 3,
+    },
   },
   {
-    id: uuid(),
     name: 'Air Conditioner',
     isOn: true,
-    parameters: [
-      {
-        name: 'Temperature',
-        value: 20,
-      },
-      {
-        name: 'Airflow',
-        value: 40,
-      },
-    ],
+    icon: 'ac_unit',
+    parameters: {
+      Temperature: 20,
+      Airflow: 40,
+    },
   },
   {
-    id: uuid(),
     name: 'CCTV Cam',
     isOn: true,
-    parameters: [
-      {
-        name: 'Left/Right',
-        value: 96.4,
-      },
-      {
-        name: 'Up/Down',
-        value: 86.2,
-      },
-    ],
+    icon: 'videocam',
+    parameters: {
+      'Left/Right': 96.4,
+      'Up/Down': 86.2,
+    },
   },
 ];
 
 const App = () => {
   const [rooms, setRooms] = useState(ROOMS);
-  const [devices, setDevices] = useState(DEVICES);
 
   const handleRoomToggleOn = (event, roomId) => {
     const mappedRooms = rooms.map((room) => {
@@ -145,8 +183,73 @@ const App = () => {
     setRooms([...mappedRooms]);
   };
 
+  const handleParamsChange = (
+    event,
+    newValue,
+    deviceName,
+    paramName,
+    roomId
+  ) => {
+    const mappedRooms = rooms.map((room) => {
+      if (room.id === roomId) {
+        return {
+          ...room,
+          devices: room.devices.map((device) => {
+            if (device.name === deviceName) {
+              return {
+                ...device,
+                parameters: device.parameters.map((parameter) => {
+                  if (parameter.name === paramName) {
+                    return {
+                      ...parameter,
+                      value: newValue,
+                    };
+                  }
+                  return parameter;
+                }),
+              };
+            }
+            return device;
+          }),
+        };
+      }
+      return room;
+    });
+
+    setRooms([...mappedRooms]);
+  };
+
+  const handleDeviceOnOff = (event, deviceName, roomId) => {
+    const mappedRooms = rooms.map((room) => {
+      if (room.id === roomId) {
+        return {
+          ...room,
+          devices: room.devices.map((device) => {
+            if (device.name === deviceName) {
+              return {
+                ...device,
+                isOn: event.target.checked,
+              };
+            }
+            return device;
+          }),
+        };
+      }
+      return room;
+    });
+
+    setRooms([...mappedRooms]);
+  };
+
   return (
-    <AppContext.Provider value={{ rooms, handleRoomToggleOn }}>
+    <AppContext.Provider
+      value={{
+        rooms,
+        handleRoomToggleOn,
+        handleParamsChange,
+        handleDeviceOnOff,
+      }}
+    >
       <GlobalStyleTemplate>
         <Router />
       </GlobalStyleTemplate>

@@ -9,7 +9,7 @@ const Home = () => {
 
   return (
     <StyledHome>
-      <List listArray={context.rooms} ListComponent={Room} />
+      <List listType="rooms" listArray={context.rooms} component={<Room />} />
     </StyledHome>
   );
 };

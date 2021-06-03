@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import List from '../../components/organisms/List';
 import RoomHeader from '../../components/organisms/RoomHeader';
+import Device from '../../components/molecules/Device';
 import { StyledSingleRoom } from './StyledSingleRoom';
+import AppContext from '../../context/AppContext';
 
 const SingleRoom = ({ location }) => {
-  const { name, members, temp, humidity } = location.state;
+  const { id } = location.state;
+  const { rooms } = useContext(AppContext);
+
+  const { name, members, temp, humidity, devices, isOn } = rooms.find(
+    (room) => room.id === id
+  );
 
   return (
     <StyledSingleRoom>
@@ -12,6 +20,11 @@ const SingleRoom = ({ location }) => {
         members={members}
         temp={temp}
         humidity={humidity}
+      />
+      <List
+        listType="devices"
+        listArray={devices}
+        component={<Device roomId={id} isRoomOn={isOn} />}
       />
     </StyledSingleRoom>
   );

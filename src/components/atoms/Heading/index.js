@@ -14,7 +14,7 @@ const Heading = ({ children, className, headingType }) => {
         );
       case 'h2':
         return (
-          <StyledHeadingH3 className={className}>{children}</StyledHeadingH3>
+          <StyledHeadingH2 className={className}>{children}</StyledHeadingH2>
         );
       default:
         return (
