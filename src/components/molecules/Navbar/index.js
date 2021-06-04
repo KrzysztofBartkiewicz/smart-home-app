@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import routes from '../../../helpers/routes';
 import Icon from '../../atoms/Icon';
 import { StyledNavbar, StyledAddLink, StyledNavLink } from './StyledNavbar';
@@ -13,7 +12,7 @@ const Navbar = () => {
       <StyledNavLink to={routes.home}>
         <Icon>schedule</Icon>
       </StyledNavLink>
-      <StyledAddLink to={routes.home}>
+      <StyledAddLink to={routes.addRoom}>
         <Icon>add</Icon>
       </StyledAddLink>
       <StyledNavLink to={routes.home}>

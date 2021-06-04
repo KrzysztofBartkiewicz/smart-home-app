@@ -241,6 +241,21 @@ const App = () => {
     setRooms([...mappedRooms]);
   };
 
+  const handleAddNewRoom = (data) => {
+    setRooms((prev) => [
+      ...prev,
+      {
+        id: uuid(),
+        name: data.roomName,
+        members: data.membersNo,
+        devices: [],
+        isOn: false,
+        temp: 23,
+        humidity: 30,
+      },
+    ]);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -248,6 +263,7 @@ const App = () => {
         handleRoomToggleOn,
         handleParamsChange,
         handleDeviceOnOff,
+        handleAddNewRoom,
       }}
     >
       <GlobalStyleTemplate>
