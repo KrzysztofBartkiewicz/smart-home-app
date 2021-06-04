@@ -4,6 +4,7 @@ const routes = {
   settings: '/settings',
   addRoom: '/addRoom',
   addDevice: '/addDevice',
+  roomSettings: '/:roomName/settings',
 };
 
 export default routes;

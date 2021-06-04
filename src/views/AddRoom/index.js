@@ -1,13 +1,15 @@
 import React, { useState, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
+import routes from '../../helpers/routes';
 import AppContext from '../../context/AppContext';
 import Input from '../../components/atoms/Input';
 import Label from '../../components/atoms/Label';
 import {
   StyledAddRoom,
-  StyledHeading,
   StyledInputWrapper,
   StyledButton,
 } from './StyledAddRoom';
+import Header from '../../components/molecules/Header';
 
 const AddRoom = () => {
   const { handleAddNewRoom } = useContext(AppContext);
@@ -15,6 +17,7 @@ const AddRoom = () => {
     roomName: '',
     membersNo: '',
   });
+  const [redirectToHome, setRedirectToHome] = useState(false);
 
   const handleChange = (event) => {
     setInputsValues((prev) => ({
@@ -26,11 +29,13 @@ const AddRoom = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     handleAddNewRoom(inputsValues);
+    setRedirectToHome(true);
   };
 
   return (
     <>
-      <StyledHeading headingType="h1">Add new room</StyledHeading>
+      {redirectToHome ? <Redirect to={routes.home} /> : null}
+      <Header>Add New Room</Header>
       <StyledAddRoom onSubmit={handleSubmit}>
         <StyledInputWrapper>
           <Label>

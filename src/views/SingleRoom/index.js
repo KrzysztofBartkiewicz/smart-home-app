@@ -16,6 +16,7 @@ const SingleRoom = ({ location }) => {
   return (
     <StyledSingleRoom>
       <RoomHeader
+        id={id}
         name={name}
         members={members}
         temp={temp}

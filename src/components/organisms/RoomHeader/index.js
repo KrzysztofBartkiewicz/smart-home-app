@@ -1,15 +1,17 @@
 import React from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import RoomCondition from '../../molecules/RoomCodition';
 import {
   StyledMembersInfo,
   StyledRoomConditionsWrapper,
   StyledRoomHeader,
   StyledRoomHeading,
-  StyledPopupMenu,
+  StyledSettingsBtn,
   StyledBackButton,
 } from './StyledRoomHeader';
 
-const RoomHeader = ({ name, members, temp, humidity }) => {
+const RoomHeader = ({ id, name, members, temp, humidity }) => {
+  const { goBack } = useHistory();
   const temperature = (
     <>
       {temp}
@@ -19,7 +21,7 @@ const RoomHeader = ({ name, members, temp, humidity }) => {
 
   return (
     <StyledRoomHeader>
-      <StyledBackButton icon="arrow_back" />
+      <StyledBackButton onClickFn={goBack} icon="arrow_back" />
       <StyledRoomHeading headingType="h1">{name}</StyledRoomHeading>
       <StyledMembersInfo>
         {members} members have access to this room
@@ -36,7 +38,14 @@ const RoomHeader = ({ name, members, temp, humidity }) => {
           conditionName="HUMIDITY"
         />
       </StyledRoomConditionsWrapper>
-      <StyledPopupMenu />
+      <Link
+        to={{
+          pathname: `/${name.replace(/\s/g, '')}/settings`,
+          state: { id, name },
+        }}
+      >
+        <StyledSettingsBtn icon="settings" />
+      </Link>
     </StyledRoomHeader>
   );
 };

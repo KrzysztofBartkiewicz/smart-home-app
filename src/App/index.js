@@ -126,48 +126,70 @@ const DEVICES = [
     name: 'Fridge',
     isOn: true,
     icon: 'kitchen',
-    parameters: {
-      Temperature: 3,
-    },
+    parameters: [
+      {
+        name: 'Temperature',
+        value: 3,
+      },
+    ],
   },
   {
     name: 'Lamp',
     isOn: true,
     icon: 'light',
-    parameters: {
-      Brightness: 65,
-    },
+    parameters: [
+      {
+        name: 'Brightness',
+        value: 10,
+      },
+    ],
   },
   {
     name: 'TV',
     isOn: true,
     icon: 'tv',
-    parameters: {
-      Volume: 3,
-    },
+    parameters: [
+      {
+        name: 'Volume',
+        value: 3,
+      },
+    ],
   },
   {
     name: 'Air Conditioner',
     isOn: true,
     icon: 'ac_unit',
-    parameters: {
-      Temperature: 20,
-      Airflow: 40,
-    },
+    parameters: [
+      {
+        name: 'Temperature',
+        value: 23,
+      },
+      {
+        name: 'Airflow',
+        value: 7,
+      },
+    ],
   },
   {
     name: 'CCTV Cam',
     isOn: true,
     icon: 'videocam',
-    parameters: {
-      'Left/Right': 96.4,
-      'Up/Down': 86.2,
-    },
+    parameters: [
+      {
+        name: 'Left/Right',
+        value: 96.7,
+      },
+      {
+        name: 'Left/Right',
+        value: 86.2,
+      },
+    ],
   },
 ];
 
 const App = () => {
   const [rooms, setRooms] = useState(ROOMS);
+  const [devices, setDevices] = useState(DEVICES);
 
   const handleRoomToggleOn = (event, roomId) => {
     const mappedRooms = rooms.map((room) => {
@@ -256,14 +278,45 @@ const App = () => {
     ]);
   };
 
+  const handleRoomDeviceAddRemove = (deviceName, roomId, operation) => {
+    const mappedRooms = rooms.map((room) => {
+      if (room.id === roomId) {
+        if (operation === 'add') {
+          const deviceToAdd = devices.find(
+            (device) => device.name === deviceName
+          );
+          const newDevices = [...room.devices, deviceToAdd];
+
+          return {
+            ...room,
+            devices: newDevices,
+          };
+        }
+        if (operation === 'remove') {
+          return {
+            ...room,
+            devices: room.devices.filter(
+              (device) => device.name !== deviceName
+            ),
+          };
+        }
+      }
+      return room;
+    });
+
+    setRooms([...mappedRooms]);
+  };
+
   return (
     <AppContext.Provider
       value={{
         rooms,
+        devices,
         handleRoomToggleOn,
         handleParamsChange,
         handleDeviceOnOff,
         handleAddNewRoom,
+        handleRoomDeviceAddRemove,
       }}
     >
       <GlobalStyleTemplate>

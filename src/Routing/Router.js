@@ -4,6 +4,7 @@ import routes from '../helpers/routes';
 import NavigationTemplate from '../templates/NavigationTemplate';
 import AddRoom from '../views/AddRoom';
 import Home from '../views/Home';
+import RoomSettings from '../views/RoomSettings';
 import Settings from '../views/Settings';
 import SingleRoom from '../views/SingleRoom';
 
@@ -16,6 +17,7 @@ const Router = () => {
           <Route path={routes.settings} component={Settings} />
           <Route path={routes.singleRoom} component={SingleRoom} />
           <Route path={routes.addRoom} component={AddRoom} />
+          <Route path={routes.roomSettings} component={RoomSettings} />
         </Switch>
       </NavigationTemplate>
     </BrowserRouter>

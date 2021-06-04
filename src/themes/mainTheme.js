@@ -4,8 +4,10 @@ export const mainTheme = {
     primaryLight: '#fcc1a0',
     secondary: '#B1AFAF',
     tertiary: '#ECECEC',
-    disabled: '#E5E5E5',
     white: '#FFFFFF',
+    disabled: '#E5E5E5',
+    red: '#d92027',
+    green: '#35d0ba',
     text: {
       primary: '#2C2C2C',
       secondary: '#ACACAC',

@@ -14,4 +14,10 @@ export const StyledButton = styled.button`
       border-radius: 2rem;
       color: ${theme.colors.white};
     `}
+  ${({ icon, text }) =>
+    icon &&
+    !text &&
+    css`
+      background: transparent;
+    `}
 `;
