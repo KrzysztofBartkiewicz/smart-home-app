@@ -1,195 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Router from '../Routing/Router';
 import AppContext from '../context/AppContext';
 import GlobalStyleTemplate from '../templates/GlobalStyleTemplate';
+import roomsData from '../data/rooms';
+import devicesData from '../data/devices';
+import useAxiosRequest from '../hooks/api/useAxiosRequest';
+import url from '../helpers/urlStrings';
 import { v4 as uuid } from 'uuid';
 
-const ROOMS = [
-  {
-    id: uuid(),
-    name: 'Living Room',
-    members: 3,
-    devices: [
-      {
-        name: 'Air Conditioner',
-        isOn: true,
-        icon: 'ac_unit',
-        parameters: [
-          {
-            name: 'Temperature',
-            value: 30,
-          },
-          {
-            name: 'Airflow',
-            value: 20,
-          },
-        ],
-      },
-      {
-        name: 'TV',
-        isOn: true,
-        icon: 'tv',
-        parameters: [
-          {
-            name: 'Volume',
-            value: 5,
-          },
-        ],
-      },
-      {
-        name: 'Lamp',
-        isOn: true,
-        icon: 'light',
-        parameters: [
-          {
-            name: 'Brightness',
-            value: 5,
-          },
-        ],
-      },
-    ],
-    isOn: true,
-    temp: 22,
-    humidity: 50,
-  },
-  {
-    id: uuid(),
-    name: 'Bed Room',
-    members: 3,
-    devices: [],
-    isOn: false,
-    temp: 23,
-    humidity: 30,
-  },
-  {
-    id: uuid(),
-    name: 'Guest Room',
-    members: 2,
-    devices: [],
-    isOn: false,
-    temp: 21,
-    humidity: 45,
-  },
-  {
-    id: uuid(),
-    name: 'Kitchen',
-    members: 2,
-    devices: [
-      {
-        name: 'Fridge',
-        isOn: true,
-        icon: 'kitchen',
-        parameters: [{ name: 'Temperature', value: 30 }],
-      },
-      {
-        name: 'Air Conditioner',
-        isOn: true,
-        icon: 'ac_unit',
-        parameters: [
-          {
-            name: 'Temperature',
-            value: 30,
-          },
-          {
-            name: 'Airflow',
-            value: 20,
-          },
-        ],
-      },
-    ],
-    isOn: false,
-    temp: 25,
-    humidity: 55,
-  },
-  {
-    id: uuid(),
-    name: 'Kids Room',
-    members: 3,
-    devices: [],
-    isOn: false,
-    temp: 24,
-    humidity: 37,
-  },
-  {
-    id: uuid(),
-    name: 'Balcony',
-    members: 4,
-    devices: [],
-    isOn: false,
-    temp: 15,
-    humidity: 20,
-  },
-];
-
-const DEVICES = [
-  {
-    name: 'Fridge',
-    isOn: true,
-    icon: 'kitchen',
-    parameters: [
-      {
-        name: 'Temperature',
-        value: 3,
-      },
-    ],
-  },
-  {
-    name: 'Lamp',
-    isOn: true,
-    icon: 'light',
-    parameters: [
-      {
-        name: 'Brightness',
-        value: 10,
-      },
-    ],
-  },
-  {
-    name: 'TV',
-    isOn: true,
-    icon: 'tv',
-    parameters: [
-      {
-        name: 'Volume',
-        value: 3,
-      },
-    ],
-  },
-  {
-    name: 'Air Conditioner',
-    isOn: true,
-    icon: 'ac_unit',
-    parameters: [
-      {
-        name: 'Temperature',
-        value: 23,
-      },
-      {
-        name: 'Airflow',
-        value: 7,
-      },
-    ],
-  },
-  {
-    name: 'CCTV Cam',
-    isOn: true,
-    icon: 'videocam',
-    parameters: [
-      {
-        name: 'Left/Right',
-        value: 96.7,
-      },
-      {
-        name: 'Left/Right',
-        value: 86.2,
-      },
-    ],
-  },
-];
-
 const App = () => {
-  const [rooms, setRooms] = useState(ROOMS);
-  const [devices, setDevices] = useState(DEVICES);
+  const [rooms, setRooms] = useState(roomsData);
+  const [devices, setDevices] = useState(devicesData);
+  const [user, setUser] = useState({});
+
+  const { data: randomUser } = useAxiosRequest(url.randomUser);
+
+  useEffect(() => {
+    if (randomUser) {
+      setUser({ ...randomUser.data });
+    }
+  }, [randomUser]);
 
   const handleRoomToggleOn = (event, roomId) => {
     const mappedRooms = rooms.map((room) => {
@@ -312,6 +142,7 @@ const App = () => {
       value={{
         rooms,
         devices,
+        user,
         handleRoomToggleOn,
         handleParamsChange,
         handleDeviceOnOff,

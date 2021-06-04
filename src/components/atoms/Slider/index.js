@@ -16,6 +16,8 @@ export default function MaterialSlider({
   onChangeFn,
   label,
   isDisabled,
+  min,
+  max,
 }) {
   const classes = useStyles();
 
@@ -23,6 +25,8 @@ export default function MaterialSlider({
     <div className={classes.root}>
       <label className={classes.label}>{label}</label>
       <Slider
+        min={min}
+        max={max}
         disabled={isDisabled}
         value={value}
         onChange={onChangeFn}

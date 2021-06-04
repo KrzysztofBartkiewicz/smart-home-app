@@ -36,10 +36,11 @@ const Device = ({
         <StyledInnerWrapper>
           <StyledHeading headingType="h2">{deviceName}</StyledHeading>
           <ul>
-            {parameters.map(({ name, value }, index) => (
+            {parameters.map(({ name, value, unit }, index) => (
               <li key={index}>
                 <StyledParagraph>
-                  {value} {name}
+                  {value}
+                  {unit} {name}
                 </StyledParagraph>
               </li>
             ))}
@@ -53,9 +54,11 @@ const Device = ({
       </StyledDeviceWrapper>
       <StyledSettingsWrapper isVisible={areSettingsVisible}>
         <ul>
-          {parameters.map(({ name, value }, index) => (
+          {parameters.map(({ name, value, min, max }, index) => (
             <li key={index}>
               <MaterialSlider
+                min={min}
+                max={max}
                 isDisabled={!isDeviceOn}
                 value={value}
                 label={name}
