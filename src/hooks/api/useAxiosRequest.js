@@ -6,7 +6,7 @@ const useAxiosRequest = (url) => {
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+  const fetchNow = () => {
     axios
       .get(url)
       .then((data) => {
@@ -17,9 +17,13 @@ const useAxiosRequest = (url) => {
         setIsPending(false);
         setError(error.message);
       });
+  };
+
+  useEffect(() => {
+    fetchNow();
   }, [url]);
 
-  return { data, isPending, error };
+  return { data, isPending, error, fetchNow };
 };
 
 export default useAxiosRequest;

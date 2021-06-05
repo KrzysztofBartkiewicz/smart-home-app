@@ -7,28 +7,21 @@ import devicesData from '../data/devices';
 import useAxiosRequest from '../hooks/api/useAxiosRequest';
 import url from '../helpers/urlStrings';
 import { v4 as uuid } from 'uuid';
+import axios from 'axios';
 // import simulateTempChange from '../utils/simulateTempChange';
 
 const App = () => {
-  const [rooms, setRooms] = useState(roomsData);
+  const [rooms, setRooms] = useState(
+    JSON.parse(localStorage.getItem('rooms')) || roomsData
+  );
   const [devices, setDevices] = useState(devicesData);
   const [user, setUser] = useState({});
 
   const { data: randomUser } = useAxiosRequest(url.randomUser);
 
-  // const updatedRooms = setInterval(() => console.log('alo'), 3000);
-
-  // useEffect(() => {
-  //   const interval = (roomsArr) => {
-  //     setTimeout(() => {
-  //       const updatedRooms = simulateTempChange(roomsArr);
-  //       console.log(updatedRooms);
-  //       setRooms(updatedRooms);
-  //       interval(rooms);
-  //     }, 3000);
-  //   };
-  //   interval(rooms);
-  // }, []);
+  useEffect(() => {
+    localStorage.setItem('rooms', JSON.stringify(rooms));
+  }, [rooms]);
 
   useEffect(() => {
     if (randomUser) {
@@ -109,18 +102,37 @@ const App = () => {
   };
 
   const handleAddNewRoom = (data) => {
-    setRooms((prev) => [
-      ...prev,
-      {
-        id: uuid(),
-        name: data.roomName,
-        members: data.membersNo,
-        devices: [],
-        isOn: false,
-        temp: 23,
-        humidity: 30,
-      },
-    ]);
+    axios
+      .get(url.randomNumber)
+      .then((res) =>
+        setRooms((prev) => [
+          ...prev,
+          {
+            id: uuid(),
+            name: data.roomName,
+            members: data.membersNo,
+            devices: [],
+            isOn: false,
+            temp: 23,
+            humidity: res.data.decimal.toFixed(0),
+          },
+        ])
+      )
+      .catch((error) => {
+        console.log(error);
+        setRooms((prev) => [
+          ...prev,
+          {
+            id: uuid(),
+            name: data.roomName,
+            members: data.membersNo,
+            devices: [],
+            isOn: false,
+            temp: 23,
+            humidity: 10,
+          },
+        ]);
+      });
   };
 
   const handleRoomDeviceAddRemove = (deviceName, roomId, operation) => {
