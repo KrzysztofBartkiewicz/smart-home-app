@@ -27,7 +27,7 @@ const Device = ({
     setAreSettingsVisible((prev) => !prev);
   };
 
-  const isDeviceOn = isRoomOn ? isOn : false;
+  const isDeviceOn = deviceName !== 'Fridge' ? (isRoomOn ? isOn : false) : true;
 
   return (
     <StyledDevice onClick={handleDeviceClick}>
@@ -47,7 +47,7 @@ const Device = ({
           </ul>
         </StyledInnerWrapper>
         <MaterialSwitch
-          isDisabled={!isRoomOn}
+          isDisabled={!isRoomOn || deviceName === 'Fridge'}
           isChecked={isDeviceOn}
           onChangeFn={(event) => handleDeviceOnOff(event, deviceName, roomId)}
         />
