@@ -11,6 +11,7 @@ export const StyledList = styled.ul`
   ${({ listType }) =>
     listType === 'rooms' &&
     css`
+      width: 100%;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-gap: 2rem;

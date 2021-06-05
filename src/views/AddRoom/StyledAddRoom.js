@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Heading from '../../components/atoms/Heading';
 import Button from '../../components/atoms/Button';
 
 export const StyledAddRoom = styled.form`

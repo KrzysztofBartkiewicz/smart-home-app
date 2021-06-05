@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import List from '../../components/organisms/List';
 import Room from '../../components/molecules/Room';
 import AppContext from '../../context/AppContext';

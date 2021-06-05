@@ -7,6 +7,7 @@ import devicesData from '../data/devices';
 import useAxiosRequest from '../hooks/api/useAxiosRequest';
 import url from '../helpers/urlStrings';
 import { v4 as uuid } from 'uuid';
+// import simulateTempChange from '../utils/simulateTempChange';
 
 const App = () => {
   const [rooms, setRooms] = useState(roomsData);
@@ -14,6 +15,20 @@ const App = () => {
   const [user, setUser] = useState({});
 
   const { data: randomUser } = useAxiosRequest(url.randomUser);
+
+  // const updatedRooms = setInterval(() => console.log('alo'), 3000);
+
+  // useEffect(() => {
+  //   const interval = (roomsArr) => {
+  //     setTimeout(() => {
+  //       const updatedRooms = simulateTempChange(roomsArr);
+  //       console.log(updatedRooms);
+  //       setRooms(updatedRooms);
+  //       interval(rooms);
+  //     }, 3000);
+  //   };
+  //   interval(rooms);
+  // }, []);
 
   useEffect(() => {
     if (randomUser) {
@@ -137,6 +152,13 @@ const App = () => {
     setRooms([...mappedRooms]);
   };
 
+  const handleRoomsRemove = (roomsIdsArr) => {
+    const filteredRooms = rooms.filter((room) =>
+      roomsIdsArr.every((id) => id !== room.id)
+    );
+    setRooms([...filteredRooms]);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -148,6 +170,7 @@ const App = () => {
         handleDeviceOnOff,
         handleAddNewRoom,
         handleRoomDeviceAddRemove,
+        handleRoomsRemove,
       }}
     >
       <GlobalStyleTemplate>

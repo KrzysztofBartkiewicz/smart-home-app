@@ -1,7 +1,7 @@
 import React from 'react';
 import routes from '../../../helpers/routes';
 import Icon from '../../atoms/Icon';
-import { StyledNavbar, StyledAddLink, StyledNavLink } from './StyledNavbar';
+import { StyledNavbar, StyledNavLink, StyledRoundLink } from './StyledNavbar';
 
 const Navbar = () => {
   return (
@@ -12,12 +12,12 @@ const Navbar = () => {
       <StyledNavLink to={routes.home}>
         <Icon>schedule</Icon>
       </StyledNavLink>
-      <StyledAddLink to={routes.addRoom}>
+      <StyledRoundLink to={routes.addRoom}>
         <Icon>add</Icon>
-      </StyledAddLink>
-      <StyledNavLink to={routes.home}>
-        <Icon>wifi</Icon>
-      </StyledNavLink>
+      </StyledRoundLink>
+      <StyledRoundLink to={routes.removeRoom}>
+        <Icon>remove</Icon>
+      </StyledRoundLink>
       <StyledNavLink to={routes.home}>
         <Icon>settings</Icon>
       </StyledNavLink>

@@ -17,7 +17,7 @@ export const StyledNavLink = styled(NavLink)`
   color: ${({ theme }) => theme.colors.secondary};
 `;
 
-export const StyledAddLink = styled(NavLink)`
+export const StyledRoundLink = styled(NavLink)`
   border-radius: 50%;
   width: 5rem;
   height: 5rem;

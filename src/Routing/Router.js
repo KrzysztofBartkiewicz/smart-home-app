@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import routes from '../helpers/routes';
 import NavigationTemplate from '../templates/NavigationTemplate';
 import AddRoom from '../views/AddRoom';
+import RemoveRoom from '../views/RemoveRoom';
 import Home from '../views/Home';
 import RoomSettings from '../views/RoomSettings';
 import Settings from '../views/Settings';
@@ -18,6 +19,7 @@ const Router = () => {
           <Route path={routes.singleRoom} component={SingleRoom} />
           <Route path={routes.addRoom} component={AddRoom} />
           <Route path={routes.roomSettings} component={RoomSettings} />
+          <Route path={routes.removeRoom} component={RemoveRoom} />
         </Switch>
       </NavigationTemplate>
     </BrowserRouter>

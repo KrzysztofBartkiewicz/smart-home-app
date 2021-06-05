@@ -5,9 +5,31 @@ const roomsData = [
     id: uuid(),
     name: 'Living Room',
     members: 3,
-    devices: [],
+    devices: [
+      {
+        name: 'Air Conditioner',
+        isOn: true,
+        icon: 'ac_unit',
+        parameters: [
+          {
+            name: 'Temperature',
+            value: 23,
+            min: 16,
+            max: 28,
+            unit: '\u2103',
+          },
+          {
+            name: 'Airflow',
+            value: 7,
+            min: 1,
+            max: 10,
+            unit: '',
+          },
+        ],
+      },
+    ],
     isOn: true,
-    temp: 22,
+    temp: 15,
     humidity: 50,
   },
   {
