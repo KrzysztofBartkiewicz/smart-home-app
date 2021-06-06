@@ -11,6 +11,19 @@ export const StyledNavbar = styled.nav`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  left: 50%;
+  transform: translateX(-50%);
+
+  @media screen and (min-width: ${({ theme }) => theme.devices.tablet}) {
+    max-width: 80rem;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.devices.desktop}) {
+    position: static;
+    transform: translateX(0);
+
+    margin: 0 auto;
+  }
 `;
 
 export const StyledNavLink = styled(NavLink)`

@@ -1,10 +1,14 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
+import { mainTheme } from '../../../themes/mainTheme';
 
 const useStyles = makeStyles({
   root: {
     width: 200,
+    '& span': {
+      color: mainTheme.colors.primary,
+    },
   },
   label: {
     fontSize: 10,

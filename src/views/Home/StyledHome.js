@@ -8,6 +8,11 @@ export const StyledHome = styled.div`
   background-color: ${({ theme }) => theme.colors.primary};
 `;
 
+export const StyledHomeWrapper = styled.div`
+  max-width: ${({ theme }) => theme.devices.tablet};
+  margin: 0 auto;
+`;
+
 export const StyledUser = styled.div`
   padding: 1rem 0 4rem 3rem;
 `;

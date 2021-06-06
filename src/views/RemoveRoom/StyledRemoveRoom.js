@@ -5,6 +5,8 @@ import Heading from '../../components/atoms/Heading';
 export const StyledRemoveRoom = styled.div``;
 
 export const StyledRoomsWrapper = styled.div`
+  max-width: 76rem;
+  margin: 0 auto;
   padding: 3rem 2rem;
   display: flex;
   flex-direction: column;

@@ -7,6 +7,11 @@ export const StyledRoomHeader = styled.header`
   padding: 1.5rem;
   border-radius: 0 0 3rem 3rem;
   background-color: ${({ theme }) => theme.colors.primary};
+`;
+
+export const StyledHeaderInner = styled.div`
+  max-width: 76rem;
+  margin: 0 auto;
   position: relative;
 `;
 

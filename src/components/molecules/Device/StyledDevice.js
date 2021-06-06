@@ -4,6 +4,8 @@ import Icon from '../../atoms/Icon';
 import Paragraph from '../../atoms/Paragraph';
 
 export const StyledDevice = styled.div`
+  max-width: 76rem;
+  margin: 0 auto;
   padding: 2rem;
   border-radius: 3rem;
   background-color: ${({ theme }) => theme.colors.white};

@@ -4,8 +4,8 @@ import Navbar from '../components/molecules/Navbar';
 const NavigationTemplate = ({ children }) => {
   return (
     <>
-      {children}
       <Navbar />
+      {children}
     </>
   );
 };

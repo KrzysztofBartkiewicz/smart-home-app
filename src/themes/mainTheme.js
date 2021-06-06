@@ -32,4 +32,9 @@ export const mainTheme = {
       xxl: '5rem',
     },
   },
+
+  devices: {
+    tablet: '720px',
+    desktop: '1200px',
+  },
 };

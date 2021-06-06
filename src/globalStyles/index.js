@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { mainTheme } from '../themes/mainTheme';
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -8,6 +9,14 @@ const GlobalStyle = createGlobalStyle`
 }
 html {
     font-size: 62.5%;
+
+    @media screen and (min-width: ${mainTheme.devices.tablet}) {
+        font-size: 75%;
+    }
+
+    @media screen and (min-width: ${mainTheme.devices.tablet}) {
+        font-size: 90%;
+    }
 }
 body {
     font-family: 'Montserrat', sans-serif;
