@@ -14,6 +14,10 @@ export const mainTheme = {
     },
   },
 
+  fontWeights: {
+    bold: '700',
+  },
+
   fontSizes: {
     s: '1.2rem',
     l: '1.4rem',

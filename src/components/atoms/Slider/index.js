@@ -14,6 +14,7 @@ const useStyles = makeStyles({
 export default function MaterialSlider({
   value,
   onChangeFn,
+  onChangeCommittedFn,
   label,
   isDisabled,
   min,
@@ -30,6 +31,7 @@ export default function MaterialSlider({
         disabled={isDisabled}
         value={value}
         onChange={onChangeFn}
+        onChangeCommitted={onChangeCommittedFn}
         onClick={(event) => event.stopPropagation()}
         aria-labelledby="continuous-slider"
       />

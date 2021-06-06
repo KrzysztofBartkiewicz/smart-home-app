@@ -8,6 +8,7 @@ import Home from '../views/Home';
 import RoomSettings from '../views/RoomSettings';
 import Settings from '../views/Settings';
 import SingleRoom from '../views/SingleRoom';
+import TimeSetting from '../views/TimeSettings';
 
 const Router = () => {
   return (
@@ -20,6 +21,7 @@ const Router = () => {
           <Route path={routes.addRoom} component={AddRoom} />
           <Route path={routes.roomSettings} component={RoomSettings} />
           <Route path={routes.removeRoom} component={RemoveRoom} />
+          <Route path={routes.timeSettings} component={TimeSetting} />
         </Switch>
       </NavigationTemplate>
     </BrowserRouter>

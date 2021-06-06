@@ -10,12 +10,16 @@ import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 // import simulateTempChange from '../utils/simulateTempChange';
 
+let timer;
+
 const App = () => {
   const [rooms, setRooms] = useState(
     JSON.parse(localStorage.getItem('rooms')) || roomsData
   );
   const [devices, setDevices] = useState(devicesData);
   const [user, setUser] = useState({});
+  const [goToSleepTime, setGoToSleepTime] = useState(0);
+  const [countdown, setCountdown] = useState(0);
 
   const { data: randomUser } = useAxiosRequest(url.randomUser);
 
@@ -28,6 +32,34 @@ const App = () => {
       setUser({ ...randomUser.data });
     }
   }, [randomUser]);
+
+  useEffect(() => {
+    if (goToSleepTime === 0) {
+      clearInterval(timer);
+      return;
+    }
+    timer = setInterval(() => {
+      setCountdown((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [goToSleepTime]);
+
+  useEffect(() => {
+    if (countdown === 0) {
+      clearInterval(timer);
+      turnOffAllRooms();
+    }
+  }, [countdown]);
+
+  const turnOffAllRooms = () => {
+    const mappedRooms = rooms.map((room) => {
+      return {
+        ...room,
+        isOn: false,
+      };
+    });
+    setRooms([...mappedRooms]);
+  };
 
   const handleRoomToggleOn = (event, roomId) => {
     const mappedRooms = rooms.map((room) => {
@@ -171,18 +203,29 @@ const App = () => {
     setRooms([...filteredRooms]);
   };
 
+  const handleTimerTimeChange = (event, newValue) => {
+    setGoToSleepTime(newValue);
+  };
+
+  const handleStartStopTimer = () => {
+    setCountdown(goToSleepTime);
+  };
+
   return (
     <AppContext.Provider
       value={{
         rooms,
         devices,
         user,
+        goToSleepTime,
         handleRoomToggleOn,
         handleParamsChange,
         handleDeviceOnOff,
         handleAddNewRoom,
         handleRoomDeviceAddRemove,
         handleRoomsRemove,
+        handleTimerTimeChange,
+        handleStartStopTimer,
       }}
     >
       <GlobalStyleTemplate>
