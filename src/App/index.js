@@ -8,6 +8,7 @@ import useAxiosRequest from '../hooks/api/useAxiosRequest';
 import url from '../helpers/urlStrings';
 import { v4 as uuid } from 'uuid';
 import axios from 'axios';
+import { useSnackbar } from 'notistack';
 // import simulateTempChange from '../utils/simulateTempChange';
 
 let timer;
@@ -21,6 +22,7 @@ const App = () => {
   const [goToSleepTime, setGoToSleepTime] = useState(0);
   const [countdown, setCountdown] = useState(0);
 
+  const { enqueueSnackbar } = useSnackbar();
   const { data: randomUser } = useAxiosRequest(url.randomUser);
 
   useEffect(() => {
@@ -62,8 +64,10 @@ const App = () => {
   };
 
   const handleRoomToggleOn = (event, roomId) => {
+    let roomName;
     const mappedRooms = rooms.map((room) => {
       if (room.id === roomId) {
+        roomName = room.name;
         return {
           ...room,
           isOn: event.target.checked,
@@ -73,6 +77,11 @@ const App = () => {
     });
 
     setRooms([...mappedRooms]);
+    if (event.target.checked) {
+      enqueueSnackbar(`${roomName} is on`, { variant: 'success' });
+      return;
+    }
+    enqueueSnackbar(`${roomName} is off`, { variant: 'success' });
   };
 
   const handleParamsChange = (
@@ -131,12 +140,17 @@ const App = () => {
     });
 
     setRooms([...mappedRooms]);
+    if (event.target.checked) {
+      enqueueSnackbar(`${deviceName} turned on`, { variant: 'success' });
+      return;
+    }
+    enqueueSnackbar(`${deviceName} turned off`, { variant: 'success' });
   };
 
   const handleAddNewRoom = (data) => {
     axios
       .get(url.randomNumber)
-      .then((res) =>
+      .then((res) => {
         setRooms((prev) => [
           ...prev,
           {
@@ -148,8 +162,9 @@ const App = () => {
             temp: 23,
             humidity: res.data.decimal.toFixed(0),
           },
-        ])
-      )
+        ]);
+        enqueueSnackbar(`${data.roomName} is added`, { variant: 'success' });
+      })
       .catch((error) => {
         console.log(error);
         setRooms((prev) => [
@@ -164,6 +179,10 @@ const App = () => {
             humidity: 10,
           },
         ]);
+        enqueueSnackbar(
+          `Api error. ${data.roomName} added with default humidity`,
+          { variant: 'warning' }
+        );
       });
   };
 
@@ -201,6 +220,7 @@ const App = () => {
       roomsIdsArr.every((id) => id !== room.id)
     );
     setRooms([...filteredRooms]);
+    enqueueSnackbar('Rooms removed', { variant: 'success' });
   };
 
   const handleTimerTimeChange = (event, newValue) => {
@@ -209,6 +229,11 @@ const App = () => {
 
   const handleStartStopTimer = () => {
     setCountdown(goToSleepTime);
+    if (goToSleepTime !== 0) {
+      enqueueSnackbar('Timer started', { variant: 'success' });
+      return;
+    }
+    enqueueSnackbar('Timer is off', { variant: 'success' });
   };
 
   return (
