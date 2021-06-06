@@ -2,13 +2,21 @@ import styled, { css } from 'styled-components';
 import Heading from '../../atoms/Heading';
 import Icon from '../../atoms/Icon';
 import Paragraph from '../../atoms/Paragraph';
+import Button from '../../atoms/Button';
 
 export const StyledDevice = styled.div`
   max-width: 76rem;
   margin: 0 auto;
-  padding: 2rem;
   border-radius: 3rem;
   background-color: ${({ theme }) => theme.colors.white};
+`;
+
+export const StyledTopWrapper = styled.div`
+  padding: 1rem;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const StyledDeviceWrapper = styled.div`
@@ -16,6 +24,18 @@ export const StyledDeviceWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+export const StyledRightWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const StyledExpandBtn = styled(Button)`
+  margin-top: 2rem;
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const StyledSettingsWrapper = styled.div`

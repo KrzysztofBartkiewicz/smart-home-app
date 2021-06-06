@@ -10,6 +10,9 @@ import {
   StyledInnerWrapper,
   StyledParagraph,
   StyledSettingsWrapper,
+  StyledRightWrapper,
+  StyledExpandBtn,
+  StyledTopWrapper,
 } from './StyledDevice';
 
 const Device = ({
@@ -20,39 +23,48 @@ const Device = ({
   roomId,
   isRoomOn,
 }) => {
-  const [areSettingsVisible, setAreSettingsVisible] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const { handleParamsChange, handleDeviceOnOff } = useContext(AppContext);
 
-  const handleDeviceClick = () => {
-    setAreSettingsVisible((prev) => !prev);
+  const handleExpand = () => {
+    setIsExpanded((prev) => !prev);
   };
 
   const isDeviceOn = deviceName !== 'Fridge' ? (isRoomOn ? isOn : false) : true;
 
   return (
-    <StyledDevice onClick={handleDeviceClick}>
-      <StyledDeviceWrapper>
-        <StyledIcon>{icon}</StyledIcon>
-        <StyledInnerWrapper>
-          <StyledHeading headingType="h2">{deviceName}</StyledHeading>
-          <ul>
-            {parameters.map(({ name, value, unit }, index) => (
-              <li key={index}>
-                <StyledParagraph>
-                  {value}
-                  {unit} {name}
-                </StyledParagraph>
-              </li>
-            ))}
-          </ul>
-        </StyledInnerWrapper>
-        <MaterialSwitch
-          isDisabled={!isRoomOn || deviceName === 'Fridge'}
-          isChecked={isDeviceOn}
-          onChangeFn={(event) => handleDeviceOnOff(event, deviceName, roomId)}
-        />
-      </StyledDeviceWrapper>
-      <StyledSettingsWrapper isVisible={areSettingsVisible}>
+    <StyledDevice>
+      <StyledTopWrapper>
+        <StyledDeviceWrapper>
+          <StyledIcon>{icon}</StyledIcon>
+          <StyledInnerWrapper>
+            <StyledHeading headingType="h2">{deviceName}</StyledHeading>
+            <ul>
+              {parameters.map(({ name, value, unit }, index) => (
+                <li key={index}>
+                  <StyledParagraph>
+                    {value}
+                    {unit} {name}
+                  </StyledParagraph>
+                </li>
+              ))}
+            </ul>
+          </StyledInnerWrapper>
+        </StyledDeviceWrapper>
+        <StyledRightWrapper>
+          <MaterialSwitch
+            isDisabled={!isRoomOn || deviceName === 'Fridge'}
+            isChecked={isDeviceOn}
+            onChangeFn={(event) => handleDeviceOnOff(event, deviceName, roomId)}
+          />
+          <StyledExpandBtn
+            onClickFn={handleExpand}
+            icon={isExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}
+          />
+        </StyledRightWrapper>
+      </StyledTopWrapper>
+
+      <StyledSettingsWrapper isVisible={isExpanded}>
         <ul>
           {parameters.map(({ name, value, min, max }, index) => (
             <li key={index}>

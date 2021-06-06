@@ -42,6 +42,22 @@ const App = () => {
   }, [randomUser]);
 
   useEffect(() => {
+    toggleStartStopTimer();
+    return () => clearInterval(timer);
+  }, [goToSleepTime]);
+
+  useEffect(() => {
+    stopCountdown();
+  }, [countdown]);
+
+  const stopCountdown = () => {
+    if (countdown === 0 && goToSleepTime !== 0) {
+      clearInterval(timer);
+      turnOffAllRooms();
+    }
+  };
+
+  const toggleStartStopTimer = () => {
     if (goToSleepTime === 0) {
       clearInterval(timer);
       return;
@@ -49,15 +65,7 @@ const App = () => {
     timer = setInterval(() => {
       setCountdown((prev) => prev - 1);
     }, 1000);
-    return () => clearInterval(timer);
-  }, [goToSleepTime]);
-
-  useEffect(() => {
-    if (countdown === 0 && goToSleepTime !== 0) {
-      clearInterval(timer);
-      turnOffAllRooms();
-    }
-  }, [countdown]);
+  };
 
   const turnOffAllRooms = () => {
     const mappedRooms = rooms.map((room) => {
@@ -78,6 +86,7 @@ const App = () => {
         roomName = room.name;
       }
     });
+
     if (event.target.checked) {
       enqueueSnackbar(`${roomName} is on`, { variant: 'success' });
       return;
@@ -97,6 +106,7 @@ const App = () => {
 
   const handleDeviceOnOff = (event, deviceName, roomId) => {
     setRooms([...toggleDeviceOnOff(event, deviceName, roomId, rooms)]);
+
     if (event.target.checked) {
       enqueueSnackbar(`${deviceName} turned on`, { variant: 'success' });
       return;
@@ -128,6 +138,7 @@ const App = () => {
     setRooms([
       ...toggleDeviceAddRemove(deviceName, roomId, operation, rooms, devices),
     ]);
+
     if (operation === 'add') {
       enqueueSnackbar(`${deviceName} added`, { variant: 'success' });
       return;
@@ -149,6 +160,7 @@ const App = () => {
 
   const handleStartStopTimer = () => {
     setCountdown(goToSleepTime);
+
     if (goToSleepTime !== 0) {
       enqueueSnackbar('Timer started', { variant: 'success' });
       return;

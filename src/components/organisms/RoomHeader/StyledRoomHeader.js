@@ -7,12 +7,26 @@ export const StyledRoomHeader = styled.header`
   padding: 1.5rem;
   border-radius: 0 0 3rem 3rem;
   background-color: ${({ theme }) => theme.colors.primary};
+  position: relative;
+`;
+
+export const StyledButtonsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  @media screen and (min-width: ${({ theme }) => theme.devices.desktop}) {
+    height: 0;
+    padding: 0 3rem;
+  }
 `;
 
 export const StyledHeaderInner = styled.div`
   max-width: 76rem;
   margin: 0 auto;
-  position: relative;
+
+  @media screen and (min-width: ${({ theme }) => theme.devices.desktop}) {
+    text-align: center;
+  }
 `;
 
 export const StyledBackButton = styled(Button)`
@@ -39,7 +53,4 @@ export const StyledRoomConditionsWrapper = styled.div`
 
 export const StyledSettingsBtn = styled(Button)`
   color: ${({ theme }) => theme.colors.white};
-  position: absolute;
-  right: 1.5rem;
-  top: 45%;
 `;

@@ -6,8 +6,8 @@ export const mainTheme = {
     tertiary: '#ECECEC',
     white: '#FFFFFF',
     disabled: '#E5E5E5',
-    red: '#d92027',
-    green: '#35d0ba',
+    red: '#d50000',
+    green: '#64dd17',
     text: {
       primary: '#2C2C2C',
       secondary: '#ACACAC',

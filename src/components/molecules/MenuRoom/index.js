@@ -4,7 +4,9 @@ import { StyledMenuRoom, StyledRoomName } from './StyledMenuRoom';
 const MenuRoom = ({ name, id, isSelected, onClickFn }) => {
   return (
     <StyledMenuRoom isSelected={isSelected} onClick={() => onClickFn(id)}>
-      <StyledRoomName headingType="h2">{name}</StyledRoomName>
+      <StyledRoomName isSelected={isSelected} headingType="h2">
+        {name}
+      </StyledRoomName>
     </StyledMenuRoom>
   );
 };

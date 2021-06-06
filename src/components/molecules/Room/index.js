@@ -19,7 +19,14 @@ const Room = ({ id, name, members, devices, isOn }) => {
       }}
     >
       <StyledName>{name}</StyledName>
-      <StyledMembersInfo>{members} have access to this room</StyledMembersInfo>
+      <StyledMembersInfo>
+        {members}{' '}
+        {members === 0
+          ? 'no members'
+          : members === 1
+          ? 'member has access to this room'
+          : 'members have access to this room'}
+      </StyledMembersInfo>
       <StyledDevicesInfo>{devices.length} Devices</StyledDevicesInfo>
       <MaterialSwitch
         isChecked={isOn}

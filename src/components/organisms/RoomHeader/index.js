@@ -9,6 +9,7 @@ import {
   StyledSettingsBtn,
   StyledBackButton,
   StyledHeaderInner,
+  StyledButtonsWrapper,
 } from './StyledRoomHeader';
 
 const RoomHeader = ({ id, name, members, temp, humidity }) => {
@@ -22,8 +23,18 @@ const RoomHeader = ({ id, name, members, temp, humidity }) => {
 
   return (
     <StyledRoomHeader>
-      <StyledHeaderInner>
+      <StyledButtonsWrapper>
         <StyledBackButton onClickFn={goBack} icon="arrow_back" />
+        <Link
+          to={{
+            pathname: `/${name.replace(/\s/g, '')}/settings`,
+            state: { id, name },
+          }}
+        >
+          <StyledSettingsBtn icon="settings" />
+        </Link>
+      </StyledButtonsWrapper>
+      <StyledHeaderInner>
         <StyledRoomHeading headingType="h1">{name}</StyledRoomHeading>
         <StyledMembersInfo>
           {members} members have access to this room
@@ -40,14 +51,6 @@ const RoomHeader = ({ id, name, members, temp, humidity }) => {
             conditionName="HUMIDITY"
           />
         </StyledRoomConditionsWrapper>
-        <Link
-          to={{
-            pathname: `/${name.replace(/\s/g, '')}/settings`,
-            state: { id, name },
-          }}
-        >
-          <StyledSettingsBtn icon="settings" />
-        </Link>
       </StyledHeaderInner>
     </StyledRoomHeader>
   );

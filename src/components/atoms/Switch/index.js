@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import { mainTheme } from '../../../themes/mainTheme';
 
-const PurpleSwitch = withStyles({
+const CustomSwitch = withStyles({
   switchBase: {
     color: mainTheme.colors.primary,
     '&$checked': {
@@ -17,9 +17,10 @@ const PurpleSwitch = withStyles({
   track: {},
 })(Switch);
 
-const MaterialSwitch = ({ isChecked, onChangeFn, isDisabled }) => {
+const MaterialSwitch = ({ isChecked, onChangeFn, isDisabled, className }) => {
   return (
-    <PurpleSwitch
+    <CustomSwitch
+      className={className}
       disabled={isDisabled}
       checked={isChecked}
       onClick={(event) => event.stopPropagation()}

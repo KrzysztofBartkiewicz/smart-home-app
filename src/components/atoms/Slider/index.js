@@ -9,6 +9,12 @@ const useStyles = makeStyles({
     '& span': {
       color: mainTheme.colors.primary,
     },
+    '& .MuiSlider-thumb:hover, & .Mui-focusVisible': {
+      boxShadow: '0 0 0 8px rgba(248, 131, 64, .16)',
+    },
+    '&:active .MuiSlider-active': {
+      boxShadow: '0 0 0 14px rgba(248, 131, 64, .16)',
+    },
   },
   label: {
     fontSize: 10,

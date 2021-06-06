@@ -14,8 +14,8 @@ html {
         font-size: 75%;
     }
 
-    @media screen and (min-width: ${mainTheme.devices.tablet}) {
-        font-size: 90%;
+    @media screen and (min-width: ${mainTheme.devices.desktop}) {
+        font-size: 80%;
     }
 }
 body {
