@@ -6,9 +6,15 @@ import roomsData from '../data/rooms';
 import devicesData from '../data/devices';
 import useAxiosRequest from '../hooks/api/useAxiosRequest';
 import url from '../helpers/urlStrings';
-import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
+import {
+  addRoom,
+  changeParams,
+  roomToggleOn,
+  toggleDeviceAddRemove,
+  toggleDeviceOnOff,
+} from '../utils/handleStateFunctions';
 // import simulateTempChange from '../utils/simulateTempChange';
 
 let timer;
@@ -47,7 +53,7 @@ const App = () => {
   }, [goToSleepTime]);
 
   useEffect(() => {
-    if (countdown === 0) {
+    if (countdown === 0 && goToSleepTime !== 0) {
       clearInterval(timer);
       turnOffAllRooms();
     }
@@ -61,22 +67,17 @@ const App = () => {
       };
     });
     setRooms([...mappedRooms]);
+    enqueueSnackbar('All rooms are off', { variant: 'success' });
   };
 
   const handleRoomToggleOn = (event, roomId) => {
+    setRooms([...roomToggleOn(event, roomId, rooms)]);
     let roomName;
-    const mappedRooms = rooms.map((room) => {
+    rooms.forEach((room) => {
       if (room.id === roomId) {
         roomName = room.name;
-        return {
-          ...room,
-          isOn: event.target.checked,
-        };
       }
-      return room;
     });
-
-    setRooms([...mappedRooms]);
     if (event.target.checked) {
       enqueueSnackbar(`${roomName} is on`, { variant: 'success' });
       return;
@@ -91,55 +92,11 @@ const App = () => {
     paramName,
     roomId
   ) => {
-    const mappedRooms = rooms.map((room) => {
-      if (room.id === roomId) {
-        return {
-          ...room,
-          devices: room.devices.map((device) => {
-            if (device.name === deviceName) {
-              return {
-                ...device,
-                parameters: device.parameters.map((parameter) => {
-                  if (parameter.name === paramName) {
-                    return {
-                      ...parameter,
-                      value: newValue,
-                    };
-                  }
-                  return parameter;
-                }),
-              };
-            }
-            return device;
-          }),
-        };
-      }
-      return room;
-    });
-
-    setRooms([...mappedRooms]);
+    setRooms([...changeParams(newValue, deviceName, paramName, roomId, rooms)]);
   };
 
   const handleDeviceOnOff = (event, deviceName, roomId) => {
-    const mappedRooms = rooms.map((room) => {
-      if (room.id === roomId) {
-        return {
-          ...room,
-          devices: room.devices.map((device) => {
-            if (device.name === deviceName) {
-              return {
-                ...device,
-                isOn: event.target.checked,
-              };
-            }
-            return device;
-          }),
-        };
-      }
-      return room;
-    });
-
-    setRooms([...mappedRooms]);
+    setRooms([...toggleDeviceOnOff(event, deviceName, roomId, rooms)]);
     if (event.target.checked) {
       enqueueSnackbar(`${deviceName} turned on`, { variant: 'success' });
       return;
@@ -153,32 +110,13 @@ const App = () => {
       .then((res) => {
         setRooms((prev) => [
           ...prev,
-          {
-            id: uuid(),
-            name: data.roomName,
-            members: data.membersNo,
-            devices: [],
-            isOn: false,
-            temp: 23,
-            humidity: res.data.decimal.toFixed(0),
-          },
+          addRoom(data.roomName, data.membersNo, res.data),
         ]);
         enqueueSnackbar(`${data.roomName} is added`, { variant: 'success' });
       })
       .catch((error) => {
         console.log(error);
-        setRooms((prev) => [
-          ...prev,
-          {
-            id: uuid(),
-            name: data.roomName,
-            members: data.membersNo,
-            devices: [],
-            isOn: false,
-            temp: 23,
-            humidity: 10,
-          },
-        ]);
+        setRooms((prev) => [...prev, addRoom(data.roomName, data.membersNo)]);
         enqueueSnackbar(
           `Api error. ${data.roomName} added with default humidity`,
           { variant: 'warning' }
@@ -187,32 +125,14 @@ const App = () => {
   };
 
   const handleRoomDeviceAddRemove = (deviceName, roomId, operation) => {
-    const mappedRooms = rooms.map((room) => {
-      if (room.id === roomId) {
-        if (operation === 'add') {
-          const deviceToAdd = devices.find(
-            (device) => device.name === deviceName
-          );
-          const newDevices = [...room.devices, deviceToAdd];
-
-          return {
-            ...room,
-            devices: newDevices,
-          };
-        }
-        if (operation === 'remove') {
-          return {
-            ...room,
-            devices: room.devices.filter(
-              (device) => device.name !== deviceName
-            ),
-          };
-        }
-      }
-      return room;
-    });
-
-    setRooms([...mappedRooms]);
+    setRooms([
+      ...toggleDeviceAddRemove(deviceName, roomId, operation, rooms, devices),
+    ]);
+    if (operation === 'add') {
+      enqueueSnackbar(`${deviceName} added`, { variant: 'success' });
+      return;
+    }
+    enqueueSnackbar(`${deviceName} removed`, { variant: 'success' });
   };
 
   const handleRoomsRemove = (roomsIdsArr) => {
