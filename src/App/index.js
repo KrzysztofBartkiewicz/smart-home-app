@@ -15,9 +15,9 @@ import {
   toggleDeviceAddRemove,
   toggleDeviceOnOff,
 } from '../utils/handleStateFunctions';
-// import simulateTempChange from '../utils/simulateTempChange';
 
 let timer;
+let simTempTimer;
 
 const App = () => {
   const [rooms, setRooms] = useState(
@@ -33,6 +33,10 @@ const App = () => {
 
   useEffect(() => {
     localStorage.setItem('rooms', JSON.stringify(rooms));
+    simTempTimer = setInterval(() => {
+      handleSimulateTemp();
+    }, 1000);
+    return () => clearInterval(simTempTimer);
   }, [rooms]);
 
   useEffect(() => {
@@ -49,6 +53,40 @@ const App = () => {
   useEffect(() => {
     stopCountdown();
   }, [countdown]);
+
+  const handleSimulateTemp = () => {
+    const mappedRooms = rooms.map((room) => {
+      let adjustedTemp = null;
+      let targetTemp = null;
+
+      room.devices.forEach((device) => {
+        if (device.name === 'Air Conditioner') {
+          device.parameters.forEach((parameter) => {
+            if (parameter.name === 'Temperature' && device.isOn) {
+              adjustedTemp = parameter.value;
+            }
+          });
+        }
+      });
+
+      if (adjustedTemp) {
+        if (room.temp > adjustedTemp) {
+          targetTemp = room.temp - 1;
+        } else if (room.temp < adjustedTemp) {
+          targetTemp = room.temp + 1;
+        } else {
+          targetTemp = room.temp;
+        }
+        return {
+          ...room,
+          temp: targetTemp,
+        };
+      }
+      return room;
+    });
+
+    setRooms([...mappedRooms]);
+  };
 
   const stopCountdown = () => {
     if (countdown === 0 && goToSleepTime !== 0) {

@@ -6,7 +6,6 @@ import AddRoom from '../views/AddRoom';
 import RemoveRoom from '../views/RemoveRoom';
 import Home from '../views/Home';
 import RoomSettings from '../views/RoomSettings';
-import Settings from '../views/Settings';
 import SingleRoom from '../views/SingleRoom';
 import TimeSetting from '../views/TimeSettings';
 
@@ -16,7 +15,6 @@ const Router = () => {
       <NavigationTemplate>
         <Switch>
           <Route exact path={routes.home} component={Home} />
-          <Route path={routes.settings} component={Settings} />
           <Route path={routes.singleRoom} component={SingleRoom} />
           <Route path={routes.addRoom} component={AddRoom} />
           <Route path={routes.roomSettings} component={RoomSettings} />

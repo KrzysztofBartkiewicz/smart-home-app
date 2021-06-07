@@ -13,6 +13,7 @@ export const StyledNavbar = styled.nav`
   align-items: center;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 99;
 
   @media screen and (min-width: ${({ theme }) => theme.devices.tablet}) {
     max-width: 80rem;

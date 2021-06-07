@@ -44,12 +44,13 @@ export const StyledSettingsWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   overflow: hidden;
-  transition: max-height 0.7s ease;
+  transition: max-height 0.3s, padding-bottom 0.3s;
 
   ${({ isVisible }) =>
     isVisible &&
     css`
       max-height: 50rem;
+      padding-bottom: 1rem;
     `}
 `;
 

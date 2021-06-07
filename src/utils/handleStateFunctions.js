@@ -72,6 +72,12 @@ export const roomToggleOn = (event, roomId, rooms) => {
       return {
         ...room,
         isOn: event.target.checked,
+        devices: room.devices.map((device) => {
+          return {
+            ...device,
+            isOn: event.target.checked,
+          };
+        }),
       };
     }
     return room;

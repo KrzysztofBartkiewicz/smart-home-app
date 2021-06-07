@@ -9,7 +9,6 @@ const Navbar = () => {
       <StyledNavLink exact to={routes.home}>
         <Icon>home</Icon>
       </StyledNavLink>
-
       <StyledRoundLink to={routes.addRoom}>
         <Icon>add</Icon>
       </StyledRoundLink>
