@@ -8,6 +8,7 @@ import {
   StyledAddRoom,
   StyledInputWrapper,
   StyledButton,
+  StyledInput,
 } from './StyledAddRoom';
 import Header from '../../components/molecules/Header';
 
@@ -40,7 +41,7 @@ const AddRoom = () => {
         <StyledInputWrapper>
           <Label>
             Room name:
-            <Input
+            <StyledInput
               id="roomName"
               value={inputsValues.roomName}
               onChangeFn={handleChange}
@@ -51,7 +52,7 @@ const AddRoom = () => {
         <StyledInputWrapper>
           <Label>
             Number of members:
-            <Input
+            <StyledInput
               type="number"
               id="membersNo"
               value={inputsValues.membersNo}

@@ -27,7 +27,7 @@ const RoomHeader = ({ id, name, members, temp, humidity }) => {
         <StyledBackButton onClickFn={goBack} icon="arrow_back" />
         <Link
           to={{
-            pathname: `/${name.replace(/\s/g, '')}/settings`,
+            pathname: `/room/${name.replace(/\s/g, '')}/settings`,
             state: { id, name },
           }}
         >

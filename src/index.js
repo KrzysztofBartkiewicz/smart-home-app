@@ -5,7 +5,7 @@ import { SnackbarProvider } from 'notistack';
 
 ReactDOM.render(
   <React.StrictMode>
-    <SnackbarProvider maxSnack={3}>
+    <SnackbarProvider autoHideDuration={1000} maxSnack={3}>
       <App />
     </SnackbarProvider>
   </React.StrictMode>,

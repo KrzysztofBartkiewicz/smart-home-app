@@ -14,7 +14,7 @@ const Room = ({ id, name, members, devices, isOn }) => {
   return (
     <StyledRoom
       to={{
-        pathname: `room/${name.replace(/\s/g, '')}`,
+        pathname: `/rooms/${name.replace(/\s/g, '')}`,
         state: { id },
       }}
     >

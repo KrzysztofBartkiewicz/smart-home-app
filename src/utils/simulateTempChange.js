@@ -1,23 +1,37 @@
-const simulateTempChange = (rooms) => {
-  return rooms.map((room) => {
-    let updatedTemp = null;
+const changeTemp = (rooms) => {
+  const mappedRooms = rooms.map((room) => {
+    let adjustedTemp = null;
+    let targetTemp = null;
+
     room.devices.forEach((device) => {
       if (device.name === 'Air Conditioner') {
         device.parameters.forEach((parameter) => {
-          if (parameter.name === 'Temperature') {
-            updatedTemp = parameter.value;
+          if (parameter.name === 'Temperature' && device.isOn) {
+            adjustedTemp = parameter.value;
           }
         });
       }
     });
-    if (updatedTemp) {
+
+    if (adjustedTemp) {
+      if (room.temp > adjustedTemp) {
+        targetTemp = room.temp - 1;
+      } else if (room.temp < adjustedTemp) {
+        targetTemp = room.temp + 1;
+      } else {
+        targetTemp = room.temp;
+      }
+
       return {
         ...room,
-        temp: updatedTemp,
+        temp: targetTemp,
       };
     }
+
     return room;
   });
+
+  return mappedRooms;
 };
 
-export default simulateTempChange;
+export default changeTemp;

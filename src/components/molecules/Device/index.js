@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import AppContext from '../../../context/AppContext';
 import MaterialSwitch from '../../atoms/Switch';
 import MaterialSlider from '../../atoms/Slider';
@@ -27,10 +27,18 @@ const Device = ({
   const { handleParamsChange, handleDeviceOnOff } = useContext(AppContext);
 
   const handleExpand = () => {
-    setIsExpanded((prev) => !prev);
+    if (isOn) {
+      setIsExpanded((prev) => !prev);
+    }
   };
 
   const isDeviceOn = deviceName !== 'Fridge' ? (isRoomOn ? isOn : false) : true;
+
+  useEffect(() => {
+    if (!isOn) {
+      setIsExpanded(false);
+    }
+  }, [isOn]);
 
   return (
     <StyledDevice>

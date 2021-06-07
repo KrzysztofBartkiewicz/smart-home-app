@@ -8,6 +8,7 @@ import useAxiosRequest from '../hooks/api/useAxiosRequest';
 import url from '../helpers/urlStrings';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
+import changeTemp from '../utils/simulateTempChange';
 import {
   addRoom,
   changeParams,
@@ -20,9 +21,7 @@ let timer;
 let simTempTimer;
 
 const App = () => {
-  const [rooms, setRooms] = useState(
-    JSON.parse(localStorage.getItem('rooms')) || roomsData
-  );
+  const [rooms, setRooms] = useState(roomsData);
   const [devices, setDevices] = useState(devicesData);
   const [user, setUser] = useState({});
   const [goToSleepTime, setGoToSleepTime] = useState(0);
@@ -35,7 +34,7 @@ const App = () => {
     localStorage.setItem('rooms', JSON.stringify(rooms));
     simTempTimer = setInterval(() => {
       handleSimulateTemp();
-    }, 1000);
+    }, 60000);
     return () => clearInterval(simTempTimer);
   }, [rooms]);
 
@@ -55,37 +54,7 @@ const App = () => {
   }, [countdown]);
 
   const handleSimulateTemp = () => {
-    const mappedRooms = rooms.map((room) => {
-      let adjustedTemp = null;
-      let targetTemp = null;
-
-      room.devices.forEach((device) => {
-        if (device.name === 'Air Conditioner') {
-          device.parameters.forEach((parameter) => {
-            if (parameter.name === 'Temperature' && device.isOn) {
-              adjustedTemp = parameter.value;
-            }
-          });
-        }
-      });
-
-      if (adjustedTemp) {
-        if (room.temp > adjustedTemp) {
-          targetTemp = room.temp - 1;
-        } else if (room.temp < adjustedTemp) {
-          targetTemp = room.temp + 1;
-        } else {
-          targetTemp = room.temp;
-        }
-        return {
-          ...room,
-          temp: targetTemp,
-        };
-      }
-      return room;
-    });
-
-    setRooms([...mappedRooms]);
+    setRooms([...changeTemp(rooms)]);
   };
 
   const stopCountdown = () => {
@@ -110,6 +79,12 @@ const App = () => {
       return {
         ...room,
         isOn: false,
+        devices: room.devices.map((device) => {
+          return {
+            ...device,
+            isOn: false,
+          };
+        }),
       };
     });
     setRooms([...mappedRooms]);
@@ -151,6 +126,30 @@ const App = () => {
     }
     enqueueSnackbar(`${deviceName} turned off`, { variant: 'success' });
   };
+
+  // useEffect(() => {
+  //   let randomNums = [];
+  //   rooms.forEach(() => {
+  //     axios
+  //       .get(url.randomNumber)
+  //       .then((res) => {
+  //         randomNums.push(res.data.decimal.toFixed(0));
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //         randomNums.push(10);
+  //       });
+  //   });
+  //   const mappedRooms = rooms.map((room, index) => {
+  //     console.log(index);
+  //     return {
+  //       ...room,
+  //       humidity: randomNums[index],
+  //     };
+  //   });
+  //   console.log(randomNums);
+  //   setRooms([...mappedRooms]);
+  // }, []);
 
   const handleAddNewRoom = (data) => {
     axios

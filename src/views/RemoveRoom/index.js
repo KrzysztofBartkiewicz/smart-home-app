@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import AppContext from '../../context/AppContext';
 import Header from '../../components/molecules/Header';
 import List from '../../components/organisms/List';
@@ -12,40 +12,19 @@ import {
 
 const RemoveRoom = () => {
   const { rooms, handleRoomsRemove } = useContext(AppContext);
-  const [roomsToRemove, setRoomsToRemove] = useState([]);
+  const [selectedRoomsIds, setSelectedRoomsIds] = useState([]);
 
-  useEffect(() => {
-    setRoomsToRemove([
-      ...rooms.map(({ name, id }) => ({
-        name,
-        id,
-        isSelected: false,
-      })),
-    ]);
-  }, [rooms]);
-
-  const handleSelect = (id) => {
-    const mappedRooms = roomsToRemove.map((room) => {
-      if (room.id === id) {
-        return {
-          ...room,
-          isSelected: !room.isSelected,
-        };
-      }
-      return room;
-    });
-    setRoomsToRemove([...mappedRooms]);
+  const handleSelect = (roomId) => {
+    if (selectedRoomsIds.includes(roomId)) {
+      setSelectedRoomsIds((prev) => [...prev.filter((id) => id !== roomId)]);
+      return;
+    }
+    setSelectedRoomsIds((prev) => [...prev, roomId]);
   };
 
   const handleRemoveClick = () => {
-    const roomsIdsArr = roomsToRemove.reduce((idsArr, room) => {
-      if (room.isSelected) {
-        idsArr.push(room.id);
-      }
-      return idsArr;
-    }, []);
-
-    handleRoomsRemove(roomsIdsArr);
+    handleRoomsRemove(selectedRoomsIds);
+    setSelectedRoomsIds([]);
   };
 
   return (
@@ -53,14 +32,16 @@ const RemoveRoom = () => {
       <Header>Remove Room</Header>
       <StyledRoomsWrapper>
         <StyledRoomsHeading headingType="h2">
-          {roomsToRemove.length !== 0 ? 'Select room to remove' : 'No rooms'}
+          {rooms.length !== 0 ? 'Select room to remove' : 'No rooms'}
         </StyledRoomsHeading>
         <List
           listType="rooms"
-          listArray={roomsToRemove}
-          component={<MenuRoom onClickFn={handleSelect} />}
+          listArray={rooms}
+          component={
+            <MenuRoom onClickFn={handleSelect} selectedArr={selectedRoomsIds} />
+          }
         />
-        {roomsToRemove.some((room) => room.isSelected === true) ? (
+        {selectedRoomsIds.length !== 0 ? (
           <StyledRemoveBtn onClickFn={handleRemoveClick}>
             Remove selected
           </StyledRemoveBtn>
