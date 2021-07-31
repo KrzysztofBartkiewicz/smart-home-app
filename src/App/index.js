@@ -26,7 +26,7 @@ const App = () => {
   const [user, setUser] = useState({});
   const [goToSleepTime, setGoToSleepTime] = useState(0);
   const [countdown, setCountdown] = useState(0);
-
+  const [numbers2, setNumbers2] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
   const { data: randomUser } = useAxiosRequest(url.randomUser);
 
@@ -127,28 +127,63 @@ const App = () => {
     enqueueSnackbar(`${deviceName} turned off`, { variant: 'success' });
   };
 
+  // const getRandomH = () => {
+  //   axios.get(url.randomNumber).then((res) => {
+  //     humidity = res.data.decimal.toFixed(0);
+  //   });
+  // };
+
   // useEffect(() => {
-  //   let randomNums = [];
-  //   rooms.forEach(() => {
-  //     axios
-  //       .get(url.randomNumber)
-  //       .then((res) => {
-  //         randomNums.push(res.data.decimal.toFixed(0));
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         randomNums.push(10);
-  //       });
-  //   });
-  //   const mappedRooms = rooms.map((room, index) => {
-  //     console.log(index);
-  //     return {
-  //       ...room,
-  //       humidity: randomNums[index],
-  //     };
-  //   });
-  //   console.log(randomNums);
-  //   setRooms([...mappedRooms]);
+  //   getRandomH();
+  // }, []);
+
+  useEffect(() => {
+    let promises = [];
+    let numbers = [];
+    for (let i = 0; i < rooms.length; i++) {
+      axios
+        .get(url.randomNumber)
+        .then((res) => {
+          console.log(i);
+          console.log(res);
+
+          console.log(res.data.decimal.toFixed(0));
+
+          // setNumbers2([...numbers2, res.data.decimal.toFixed(0)]);
+          numbers.push(res.data.decimal.toFixed(0));
+        })
+        .catch((error) => {
+          console.log(error);
+          numbers.push(10);
+        });
+    }
+
+    setNumbers2(numbers);
+    Promise.all(promises).then((res) => console.log(res));
+    console.log(numbers, 'NUMBERS');
+    console.log(numbers2, 'NUMBERS2');
+  }, []);
+
+  // useEffect(() => {
+  //   let promises = [];
+  //   let numbers = [];
+  //   for (let i = 0; i < rooms.length; i++) {
+  //     promises.push(
+  //       axios
+  //         .get(url.randomNumber)
+  //         .then((res) => {
+  //           setNumbers2([...numbers2, res.data.decimal.toFixed(0)]);
+  //           numbers.push(res.data.decimal.toFixed(0));
+  //         })
+  //         .catch((error) => {
+  //           console.log(error);
+  //           numbers.push(10);
+  //         })
+  //     );
+  //   }
+  //   Promise.all(promises).then((res) => console.log(res));
+  //   console.log(numbers, 'NUMBERS');
+  //   console.log(numbers2, 'NUMBERS2');
   // }, []);
 
   const handleAddNewRoom = (data) => {

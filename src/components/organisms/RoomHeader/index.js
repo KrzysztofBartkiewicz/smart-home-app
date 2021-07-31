@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import RoomCondition from '../../molecules/RoomCodition';
+import RoomCondition from '../../molecules/RoomCondition';
 import {
   StyledMembersInfo,
   StyledRoomConditionsWrapper,
